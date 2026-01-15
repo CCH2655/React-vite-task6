@@ -1,0 +1,17 @@
+.login {
+  width: 18rem;
+}
+
+img {
+  object-fit: contain;
+  max-width: 100%;
+}
+
+.primary-image {
+  height: 300px;
+}
+
+.images {
+  height: 150px;
+  margin-right: 5px; /* 加點邊距 */
+}
