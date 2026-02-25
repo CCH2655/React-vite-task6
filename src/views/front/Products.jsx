@@ -17,7 +17,7 @@ function Products(params) {
         );
         setProducts(response.data.products);
       } catch (error) {
-        console.log(error.response);
+        // console.log(error.response);
       }
     };
     getProducts();

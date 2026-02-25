@@ -36,7 +36,6 @@ function Products() {
       const response = await axios.get(
         `${API_BASE}/api/${API_PATH}/admin/products?page=${page}`,
       );
-      // console.log("產品資料：", response.data);
       setProducts(response.data.products);
       setPagination(response.data.pagination);
     } catch (err) {

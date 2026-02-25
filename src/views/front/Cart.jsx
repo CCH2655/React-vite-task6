@@ -6,7 +6,7 @@ const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
 
 const Cart = () => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState({});
 
   const getCart = async () => {
     try {
@@ -14,7 +14,7 @@ const Cart = () => {
       const response = await axios.get(url);
       setCart(response.data.data);
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 
@@ -28,7 +28,7 @@ const Cart = () => {
       const response = await axios.put(url, { data });
       getCart();
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 
@@ -39,7 +39,7 @@ const Cart = () => {
       const response = await axios.delete(url);
       getCart();
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 
@@ -50,7 +50,7 @@ const Cart = () => {
       const response = await axios.delete(url);
       getCart();
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 
@@ -68,6 +68,7 @@ const Cart = () => {
             type="button"
             className="btn btn-outline-danger"
             onClick={() => delCarts()}
+            disabled={!cart.carts?.length}
           >
             清空購物車
           </button>
@@ -93,7 +94,7 @@ const Cart = () => {
                     刪除
                   </button>
                 </td>
-                <th scope="row">{cartItem.product.title}</th>
+                <td scope="row">{cartItem.product.title}</td>
                 <td>
                   <div className="input-group input-group-sm mb-3">
                     <input
@@ -115,6 +116,13 @@ const Cart = () => {
                 <td className="text-end">{ currency(cartItem.final_total)}</td>
               </tr>
             ))}
+            { !cart.carts?.length &&
+              <tr>
+                <td colSpan="4" className="py-4 text-center">
+                  你的購物車還是空的
+                </td>
+              </tr>
+            }
           </tbody>
           <tfoot>
             <tr>

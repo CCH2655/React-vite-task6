@@ -92,11 +92,9 @@ function ProductModal({
       let response;
       if (method === "put") {
         response = await axios.put(url, productData);
-        // console.log("產品更新成功：", response.data);
         alert("產品更新成功！");
       } else {
         response = await axios.post(url, productData);
-        // console.log("產品新增成功：", response.data);
         alert("產品新增成功！");
       }
 
@@ -104,8 +102,7 @@ function ProductModal({
       closeModal();
       getProducts();
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.message;
-      console.error(`${modalType === "edit" ? "更新" : "新增"}失敗：`, errorMsg);
+      const errorMsg = err.response?.data?.message || err.message;      
       alert(`${modalType === "edit" ? "更新" : "新增"}失敗：${errorMsg}`);
     }
   };
@@ -115,7 +112,6 @@ function ProductModal({
       const response = await axios.delete(
         `${API_BASE}/api/${API_PATH}/admin/product/${id}`
       );
-      // console.log("產品刪除成功：", response.data);
       alert("產品刪除成功！");
 
       // 關閉 Modal 並重新載入資料
@@ -123,7 +119,6 @@ function ProductModal({
       getProducts();
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message;
-      console.error("刪除失敗：", errorMsg);
       alert("刪除失敗：" + errorMsg);
     }
   };

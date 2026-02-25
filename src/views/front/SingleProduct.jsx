@@ -15,7 +15,7 @@ function SingleProduct() {
         const response = await axios.get(`${API_BASE}/api/${API_PATH}/product/${id}`);
         setProduct(response.data.product);
       } catch (error) {
-        console.log(error.response);
+        // console.log(error.response);
       }
     };
     handleView(id)
@@ -30,7 +30,7 @@ function SingleProduct() {
       const url = `${API_BASE}/api/${API_PATH}/cart`;
       await axios.post(url, { data });
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 
