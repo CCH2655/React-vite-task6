@@ -6,6 +6,10 @@ import Products from "./views/front/Products";
 import SingleProduct from "./views/front/SingleProduct";
 import Cart from "./views/front/Cart";
 import NotFound from "./views/front/NotFound";
+import Checkout from "./views/front/Checkout";
+import Login from "./views/Login";
+import AdminProducts from "./views/Products"
+import BackendLayout from "./layout/BackendLayout";
 
 export const router = createHashRouter([
   {
@@ -27,6 +31,28 @@ export const router = createHashRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <BackendLayout />,
+    children: [
+      {
+        index: true, // 預設首頁
+        element: <Home />,
+      },
+      {
+        path: "product",
+        element: <AdminProducts />,
       },
     ],
   },

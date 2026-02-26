@@ -14,6 +14,12 @@ function FrontendLayout(params) {
             <Link className="nav-link" to="/cart">
               購物車
             </Link>
+            <Link className="nav-link" to="/checkout">
+              結帳
+            </Link>
+            <Link className="nav-link" to="/login">
+              登入
+            </Link>
         </nav>
 
       </header>

@@ -55,7 +55,26 @@ function Products() {
     productModalRef.current.hide();
   };
 
+  const checkAdmin = async () => {
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("hexToken="))
+      ?.split("=")[1];
+
+    if (token) {
+      axios.defaults.headers.common.Authorization = token;
+    }
+    
+    try {
+      await axios.post(`${API_BASE}/api/user/check`);
+    } catch (err) {
+      console.log("權限檢查失敗：", err.response?.data?.message);
+    }
+  };
+
   useEffect(() => {
+    checkAdmin();
+
     // 初始化 Bootstrap Modal
     productModalRef.current = new bootstrap.Modal("#productModal", {
       keyboard: false,
