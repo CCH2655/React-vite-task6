@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { RotatingLines } from "react-loader-spinner";
 import * as bootstrap from "bootstrap";
 import SingleProductModal from "../../components/SingleProductModal";
+import DeleteCheckModal from "../../components/DeleteCheckModal";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -15,11 +16,17 @@ const Checkout = () => {
   const [cart, setCart] = useState({});
   const [loadingCartId, setLoadingCartId] = useState(null);
   const [loadingProuctId, setLoadingProductId] = useState(null);
+  
+  const [delCartId, setDelCartId] = useState(null);
   const productModalRef = useRef(null);
+  const deleteCheckModalRef = useRef(null);
+
+  const [deleteModalType, setDelelteModalType] = useState("");
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -68,25 +75,35 @@ const Checkout = () => {
   };
 
   // 刪除單一購物車
-  const delCart = async (cartId) => {
-    try {
-      const url = `${API_BASE}/api/${API_PATH}/cart/${cartId}`;
-      const response = await axios.delete(url);
-      getCart();
-    } catch (error) {
-      // console.log(error.response.data);
-    }
+  // const delCart = async (cartId) => {
+  //   try {
+  //     const url = `${API_BASE}/api/${API_PATH}/cart/${cartId}`;
+  //     const response = await axios.delete(url);
+  //     getCart();
+  //     alert('已從購物車移除');
+  //   } catch (error) {
+  //     // console.log(error.response.data);
+  //   }
+  // };
+  const delCart = (cartId) => {
+    setDelelteModalType("delCart");
+    setDelCartId(cartId);
+    deleteCheckModalRef.current.show();
   };
-
   // 刪除所有購物車
-  const delCarts = async () => {
-    try {
-      const url = `${API_BASE}/api/${API_PATH}/carts`;
-      const response = await axios.delete(url);
-      getCart();
-    } catch (error) {
-      // console.log(error.response.data);
-    }
+  // const delCarts = async () => {
+  //   try {
+  //     const url = `${API_BASE}/api/${API_PATH}/carts`;
+  //     const response = await axios.delete(url);
+  //     getCart();
+  //     alert('已清空購物車');
+  //   } catch (error) {
+  //     // console.log(error.response.data);
+  //   }
+  // };
+  const delCarts = () => {
+    setDelelteModalType("delCarts");
+    deleteCheckModalRef.current.show();
   };
 
   useEffect(() => {
@@ -114,11 +131,24 @@ const Checkout = () => {
         if (document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
         }
-      });
+    });
+
+    
+    deleteCheckModalRef.current = new bootstrap.Modal("#deleteCheckModal", {
+      keyboard: false,
+    });
+
+    // Modal 關閉時移除焦點
+    document
+    .querySelector("#deleteCheckModal")
+    .addEventListener("hide.bs.modal", () => {
+        if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+        }
+    });
   }, []);
 
   const onSubmit = async (formData) => {
-    console.log(formData);
     try {
       const data = {
         user: formData,
@@ -130,8 +160,11 @@ const Checkout = () => {
       });
 
       getCart();
+      reset();
+      alert('已送出訂單');
+
     } catch (error) {
-      console.log(error.response);
+      alert(error.response.data.message);
     }
   };
 
@@ -153,12 +186,10 @@ const Checkout = () => {
 
   const closeModal = () => {
     productModalRef.current.hide();
+    deleteCheckModalRef.current.hide();
     getCart();
   };
 
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
   return (
     <>
       <div className="container">
@@ -380,8 +411,7 @@ const Checkout = () => {
               </label>
               <input
                 id="address"
-                name="address"
-                type="text"
+                name="address"type="text"
                 className="form-control"
                 placeholder="請輸入地址"
                 {...register("address", {
@@ -419,6 +449,12 @@ const Checkout = () => {
           closeModal={closeModal}
         />
       </div>
+
+      <DeleteCheckModal
+        deleteModalType={deleteModalType}
+        delCartId={delCartId}
+        closeModal={closeModal}
+      />
     </>
   );
 };

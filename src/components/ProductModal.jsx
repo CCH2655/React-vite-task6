@@ -141,7 +141,7 @@ function ProductModal({
         imageUrl: uploadedImageUrl,
       }))
     } catch (error) {
-      console.error("Upload error:", error);
+      // console.error("Upload error:", error);
     }
 
   }

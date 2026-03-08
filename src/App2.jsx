@@ -18,7 +18,7 @@ function App() {
       await axios.post(`${API_BASE}/api/user/check`);
       setIsAuth(true);
     } catch (err) {
-      console.log("權限檢查失敗：", err.response?.data?.message);
+      // console.log("權限檢查失敗：", err.response?.data?.message);
       setIsAuth(false);
     }
   };

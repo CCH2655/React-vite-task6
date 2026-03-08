@@ -39,7 +39,7 @@ function Products() {
       setProducts(response.data.products);
       setPagination(response.data.pagination);
     } catch (err) {
-      console.error("取得產品失敗：", err.response?.data?.message);
+      // console.error("取得產品失敗：", err.response?.data?.message);
     }
   };
 
@@ -68,7 +68,7 @@ function Products() {
     try {
       await axios.post(`${API_BASE}/api/user/check`);
     } catch (err) {
-      console.log("權限檢查失敗：", err.response?.data?.message);
+      // console.log("權限檢查失敗：", err.response?.data?.message);
     }
   };
 
